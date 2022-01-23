@@ -216,3 +216,66 @@ exports.likeFeed = async (req, res) => {
     });
   }
 };
+
+exports.commentsFeed = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const comments = await tbComment.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "idFeed", "idUser"],
+      },
+      include: {
+        model: tbUser,
+        as: "user",
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "bio", "password", "email"],
+        },
+      },
+      where: {
+        idFeed: id,
+      },
+      order: [["id", "DESC"]],
+    });
+
+    // tampikan ketika berhasil
+    res.status(200).send({
+      status: "Berhasil menampilkan komen",
+      data: {
+        comments: comments,
+      },
+    });
+
+    // tampilkan ketika server eror
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "Gagal",
+      message: "Server Error",
+    });
+  }
+};
+
+exports.addComment = async (req, res) => {
+  try {
+    const comment = req.body;
+
+    const dataComment = {
+      ...comment,
+      idUser: req.user.id,
+    };
+
+    await tbComment.create(dataComment);
+
+    res.status(200).send({
+      status: "Berhasil",
+      message: "Kamu berhasil menambahkan komen",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "Gagal",
+      message: "Server Error",
+    });
+  }
+};

@@ -16,7 +16,10 @@ const {
   followingFeeds,
   feeds,
   likeFeed,
+  commentsFeed,
+  addComment,
 } = require("../controllers/feed");
+const { addChat, getMessage } = require("../controllers/message");
 
 // Middleware
 const { auth } = require("../middlewares/auth");
@@ -32,7 +35,11 @@ router.get("/followers/:id", followers);
 router.get("/followings/:id", followings);
 router.post("/feed", auth, uploadFile("fileName"), addFeed);
 router.get("/feed/:id", auth, followingFeeds);
-router.get("/feeds", auth, uploadFile("fileName"), feeds);
+router.get("/feeds", auth, feeds);
 router.post("/like", auth, likeFeed);
+router.get("/comment/:id", auth, commentsFeed);
+router.post("/comment/:id", auth, addComment);
+router.post("/chat/:id", auth, addChat);
+router.get("/chat/:id", auth, getMessage);
 
 module.exports = router;

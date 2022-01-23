@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       tbMessage.belongsTo(models.tbUser, {
-        as: "reveiver",
+        as: "receiver",
         foreignKey: {
           name: "idReceiver",
         },
