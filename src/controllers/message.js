@@ -55,8 +55,8 @@ exports.addChat = async (req, res) => {
         messageSender,
       },
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
       status: "Gagal",
       message: "Server Error",

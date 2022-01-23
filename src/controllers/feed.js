@@ -107,8 +107,8 @@ exports.followingFeeds = async (req, res) => {
     });
 
     // tampilkan ketika server eror
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status({
       status: "failed",
       message: "Server Error",
@@ -152,8 +152,8 @@ exports.feeds = async (req, res) => {
     });
 
     // Jika error
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(400).send({
       status: "failed",
       message: "Server Error",
@@ -208,8 +208,8 @@ exports.likeFeed = async (req, res) => {
     });
 
     // Jika error
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
       status: "Gagal",
       message: "Server Error",
@@ -247,8 +247,8 @@ exports.commentsFeed = async (req, res) => {
     });
 
     // tampilkan ketika server eror
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
       status: "Gagal",
       message: "Server Error",
@@ -271,8 +271,8 @@ exports.addComment = async (req, res) => {
       status: "Berhasil",
       message: "Kamu berhasil menambahkan komen",
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
       status: "Gagal",
       message: "Server Error",
