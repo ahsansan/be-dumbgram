@@ -10,6 +10,12 @@ module.exports = {
       },
       idFeed: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "tbFeeds",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       idUser: {
         type: Sequelize.INTEGER,

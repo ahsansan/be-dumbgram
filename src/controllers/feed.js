@@ -18,8 +18,8 @@ exports.addFeed = async (req, res) => {
 
     // Jika berhasil
     res.status(200).send({
-      status: "Sukses",
-      message: "Berhasil mengupload data feed",
+      status: "success",
+      message: "upload feed success",
       data: {
         dataUpload,
       },
@@ -28,7 +28,7 @@ exports.addFeed = async (req, res) => {
     // Jika Error
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server error",
     });
   }
@@ -55,6 +55,7 @@ exports.followingFeeds = async (req, res) => {
           "name",
           "username",
           "email",
+          "fullName",
         ],
       },
       include: {
@@ -75,7 +76,7 @@ exports.followingFeeds = async (req, res) => {
             },
             order: [["createdAt", "DESC"]],
             attributes: {
-              exclude: ["updatedAt", "followers", "followings"],
+              exclude: ["updatedAt", "followers", "followings", "idUser"],
             },
           },
           order: [["createdAt", "DESC"]],
@@ -89,6 +90,7 @@ exports.followingFeeds = async (req, res) => {
               "name",
               "username",
               "email",
+              "fullName",
             ],
           },
         },
@@ -144,8 +146,8 @@ exports.feeds = async (req, res) => {
 
     // Jika berhasil
     res.status(200).send({
-      status: "Berhasil",
-      message: "Semua data feed didapatkan",
+      status: "success",
+      message: "feeds",
       data: {
         feeds: allfeed,
       },
@@ -176,7 +178,7 @@ exports.likeFeed = async (req, res) => {
     // jika tidak memebuhi
     if (schema.error) {
       return res.status(400).send({
-        status: "Gagal like",
+        status: "failed",
         message: schema.error.details[0].message,
       });
     }
@@ -191,8 +193,8 @@ exports.likeFeed = async (req, res) => {
     // mencari emaail ada atau tidak
     if (!checkId) {
       return res.status(400).send({
-        status: "Gagal like",
-        message: "id feed tidak ditemukan",
+        status: "failed",
+        message: "id feed not found",
       });
     }
 
@@ -203,7 +205,7 @@ exports.likeFeed = async (req, res) => {
     });
 
     res.status(200).send({
-      status: "Berhasil",
+      status: "success",
       id: id,
     });
 
@@ -211,7 +213,7 @@ exports.likeFeed = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -240,7 +242,7 @@ exports.commentsFeed = async (req, res) => {
 
     // tampikan ketika berhasil
     res.status(200).send({
-      status: "Berhasil menampilkan komen",
+      status: "success",
       data: {
         comments: comments,
       },
@@ -250,7 +252,7 @@ exports.commentsFeed = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -263,18 +265,19 @@ exports.addComment = async (req, res) => {
     const dataComment = {
       ...comment,
       idUser: req.user.id,
+      idFeed: req.params.id,
     };
 
     await tbComment.create(dataComment);
 
     res.status(200).send({
-      status: "Berhasil",
-      message: "Kamu berhasil menambahkan komen",
+      status: "success",
+      message: "comment success",
     });
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }

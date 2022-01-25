@@ -20,8 +20,8 @@ exports.addChat = async (req, res) => {
 
     if (!check) {
       return res.status(400).send({
-        status: "Gagal",
-        message: "Penerima tidak ditemukan",
+        status: "failed",
+        message: "receiver id not found",
       });
     }
 
@@ -50,7 +50,7 @@ exports.addChat = async (req, res) => {
 
     // Menampikan ketika data berhasil di tambahkan
     res.status(200).send({
-      status: "Berhasil",
+      status: "success",
       data: {
         messageSender,
       },
@@ -58,7 +58,7 @@ exports.addChat = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -77,7 +77,7 @@ exports.getMessage = async (req, res) => {
 
     if (!check) {
       return res.status(400).send({
-        status: "Gagal",
+        status: "failed",
       });
     }
 
@@ -109,7 +109,7 @@ exports.getMessage = async (req, res) => {
 
     // Jika berhasil
     res.status(200).send({
-      status: "Berhasil",
+      status: "success",
       data: {
         message: messages,
       },
@@ -119,7 +119,7 @@ exports.getMessage = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }

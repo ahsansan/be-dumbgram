@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
     // Jika data tidak valid
     if (error) {
       return res.status(400).send({
-        status: "Isilah data dengan sesuai",
+        status: "validation failed",
         error: error.details[0].message,
       });
     }
@@ -41,8 +41,8 @@ exports.register = async (req, res) => {
     // Jika email telah didaftarkan
     if (checkEmail) {
       return res.status(400).send({
-        status: "Pendaftaran gagal",
-        message: "Email sudah pernah didaftarkan",
+        status: "failed",
+        message: "email already exists",
       });
     }
 
@@ -69,7 +69,7 @@ exports.register = async (req, res) => {
 
     // Jika semuanya berhasil
     res.status(200).send({
-      status: "Pendaftaran berhasil",
+      status: "success",
       data: {
         user: {
           fullName: dataUser.fullName,
@@ -83,7 +83,7 @@ exports.register = async (req, res) => {
     //  Jika error
     console.log(err);
     res.status(500).send({
-      status: "Pendaftaran gagal",
+      status: "failed",
       message: "server error",
     });
   }
@@ -106,7 +106,7 @@ exports.login = async (req, res) => {
     // Jika data tidak valid
     if (error) {
       return res.status(400).send({
-        status: "Isilah data dengan sesuai",
+        status: "validation failed",
         error: error.details[0].message,
       });
     }
@@ -121,8 +121,8 @@ exports.login = async (req, res) => {
     // Jika belum didaftarkan
     if (!dataOnTable) {
       return res.status(400).send({
-        status: "Login gagal",
-        message: "Email dan password tidak cocok",
+        status: "failed",
+        message: "email and Password don't match",
       });
     }
 
@@ -135,8 +135,8 @@ exports.login = async (req, res) => {
     // Password Salah
     if (!validatePassword) {
       return res.status(400).send({
-        status: "Login gagal",
-        message: "Email dan password tidak cocok",
+        status: "failed",
+        message: "email and Password don't match",
       });
     }
 
@@ -154,7 +154,7 @@ exports.login = async (req, res) => {
 
     // Jika semuanya berhasil
     res.status(200).send({
-      status: "Login berhasil",
+      status: "success",
       data: {
         user: {
           fullName: dataOnTable.fullName,
@@ -168,7 +168,7 @@ exports.login = async (req, res) => {
     //  Jika error
     console.log(err);
     res.status(500).send({
-      status: "Login gagal",
+      status: "failed",
       message: "server error",
     });
   }

@@ -21,7 +21,7 @@ exports.getUsers = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      status: "Gagal cek user",
+      status: "failed",
       message: "Server error",
     });
   }
@@ -44,8 +44,8 @@ exports.editUser = async (req, res) => {
     // Jika id tidak ada
     if (!checkId) {
       return res.status(400).send({
-        status: "Gagal Mengubah Profile",
-        message: `Tidak ada user dengan id: ${id}`,
+        status: "failed",
+        message: `Id: ${id} not found`,
       });
     }
 
@@ -81,7 +81,7 @@ exports.editUser = async (req, res) => {
 
     // Berhasil update
     res.status(200).send({
-      status: "Berhasil Mengubah Profile",
+      status: "success",
       data: {
         user: dataUpdate,
       },
@@ -91,7 +91,7 @@ exports.editUser = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal Mengubah Profile",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -112,14 +112,14 @@ exports.deleteUser = async (req, res) => {
     // Jika id tidak ada
     if (!deleteData) {
       return res.status(400).send({
-        status: "Gagal menghapus data",
-        message: "ID tidak ditemukan",
+        status: "failed",
+        message: "ID not found",
       });
     }
 
     // Berhasil Menghapus
     res.status(200).send({
-      status: `Berhasil Menghapus id ${id}`,
+      status: `Id ${id} deleted`,
 
       data: {
         id,
@@ -130,7 +130,7 @@ exports.deleteUser = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal menghapus",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -174,14 +174,14 @@ exports.followers = async (req, res) => {
 
     if (!id_user) {
       return res.status(400).send({
-        status: "Gagal",
-        message: "id tidak ditemukan",
+        status: "failed",
+        message: "user not found",
       });
     }
 
     // Tampilkan Followers
     res.status(200).send({
-      status: "Berhasil",
+      status: "success",
       data: {
         id_user,
       },
@@ -191,7 +191,7 @@ exports.followers = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({
-      status: "Gagal",
+      status: "failed",
       message: "Server Error",
     });
   }
@@ -235,14 +235,14 @@ exports.followings = async (req, res) => {
 
     if (!id_user) {
       return res.status(400).send({
-        status: "Gagal",
-        message: "id tidak ditemukan",
+        status: "failed",
+        message: "user not found",
       });
     }
 
     // Tampilkan Followings
     res.status(200).send({
-      status: "Berhasil",
+      status: "success",
       data: {
         id_user,
       },

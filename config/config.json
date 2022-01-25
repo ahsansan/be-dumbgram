@@ -4,6 +4,7 @@
     "password": "hhillr1234",
     "database": "db-dumbgram",
     "host": "localhost",
+    "port": 8889,
     "dialect": "mysql"
   },
   "test": {
