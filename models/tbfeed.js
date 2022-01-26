@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       fileName: DataTypes.STRING,
       caption: DataTypes.STRING,
       idUser: DataTypes.INTEGER,
-      Like: DataTypes.INTEGER,
+      like: DataTypes.INTEGER,
     },
     {
       sequelize,

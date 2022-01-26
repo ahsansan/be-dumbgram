@@ -198,16 +198,68 @@ exports.likeFeed = async (req, res) => {
       });
     }
 
-    // Tambahkan data ke like
-    await tbLike.create({
-      idFeed: id,
-      idUser: idUser,
+    // cek jika udah like atau belum
+    const check = await tbLike.findOne({
+      where: {
+        idUser: idUser,
+        idFeed: id,
+      },
     });
 
-    res.status(200).send({
-      status: "success",
-      id: id,
-    });
+    if (check) {
+      await tbLike.destroy({ where: { idFeed: id, idUser: idUser } });
+      // cek if feed
+      const datas = await tbFeed.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      // menambhkan 1 dan update like feed
+      const likes = datas.like - 1;
+      await tbFeed.update(
+        { like: likes },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+
+      res.status(200).send({
+        status: "success",
+        id,
+      });
+    } else {
+      // cek if feed
+      const data = await tbFeed.findOne({
+        where: {
+          id: id,
+        },
+      });
+
+      // tambahkan data ke like
+      await tbLike.create({
+        idFeed: id,
+        idUser: idUser,
+      });
+
+      // menambhkan 1 dan update like feed
+      const likes = (data.like += 1);
+      await tbFeed.update(
+        { like: likes },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+
+      res.status(200).send({
+        status: "success",
+        id: id,
+      });
+    }
 
     // Jika error
   } catch (err) {
