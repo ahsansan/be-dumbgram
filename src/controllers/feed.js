@@ -100,18 +100,24 @@ exports.followingFeeds = async (req, res) => {
       },
     });
 
+    let status = [];
+    for (let index = 0; index < userData.followings.length; index++) {
+      const element = userData.followings[index];
+      for (let index2 = 0; index2 < element.followings.feed.length; index2++) {
+        const element2 = element.followings.feed[index2];
+        status.push(element2);
+      }
+    }
     // tampikan ketika berhasil
-    res.send({
+    res.status(200).send({
       status: "success",
-      data: {
-        userData,
-      },
+      data: status,
     });
 
     // tampilkan ketika server eror
   } catch (err) {
     console.log(err);
-    res.status({
+    res.status(400).send({
       status: "failed",
       message: "Server Error",
     });
